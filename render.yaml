@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: fixsmith-pc
+    runtime: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: APP_NAME
+        value: Fixsmith PC Repair Studio
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        value: base64:Wu9mvtRrD7ilmEA3RgP/qKRiV2m8ITE1aqiqubEjVH4=
+      - key: APP_DEBUG
+        value: true
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: SESSION_DRIVER
+        value: file
