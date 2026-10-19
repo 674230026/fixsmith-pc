@@ -1,0 +1,10 @@
+{
+  "description": "Streamline PC repair management with role-based access for customers, technicians, and admins, enabling tracking, status updates, and efficient communication.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
