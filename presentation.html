@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixsmith · PC Repair Studio - Presentation Deck</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: rgba(18, 24, 38, 0.75);
+            --bg-card-border: rgba(255, 255, 255, 0.08);
+            --primary: #f59e0b;
+            --primary-glow: rgba(245, 158, 11, 0.25);
+            --cyan-accent: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.2);
+            --emerald: #10b981;
+            --rose: #f43f5e;
+            --purple: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', 'Prompt', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                radial-gradient(ellipse at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(30, 41, 59, 0.3) 0%, transparent 70%);
+        }
+
+        /* Top Bar */
+        .top-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            border-bottom: 1px solid var(--bg-card-border);
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 50;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .brand-tag {
+            font-size: 0.72rem;
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            font-weight: 600;
+        }
+
+        .section-indicator {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: #e2e8f0;
+        }
+
+        .top-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--bg-card-border);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-control:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .btn-live-app {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .btn-live-app:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.15));
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        /* Slide Viewport */
+        .viewport {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .slide-container {
+            width: 100%;
+            max-width: 1240px;
+            height: calc(100vh - 140px);
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.97) translateY(15px);
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--bg-card);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 24px;
+            padding: 44px 56px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Typography & Components */
+        .slide-header {
+            margin-bottom: 22px;
+        }
+
+        .slide-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            font-weight: 700;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .badge-frontend {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.25);
+        }
+
+        .badge-backend {
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        .badge-final {
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.25);
+        }
+
+        .slide-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            color: #ffffff;
+        }
+
+        .slide-subtitle {
+            font-size: 1.02rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .highlight-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cyan-text {
+            background: linear-gradient(135deg, #38bdf8, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .emerald-text {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            height: 100%;
+            align-items: stretch;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 16px;
+            padding: 22px 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            border-color: rgba(245, 158, 11, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            margin-bottom: 14px;
+        }
+
+        .icon-amber {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .icon-cyan {
+            background: rgba(6, 182, 212, 0.15);
+            color: #38bdf8;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .icon-emerald {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .icon-purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .icon-rose {
+            background: rgba(244, 63, 94, 0.15);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            flex-grow: 1;
+        }
+
+        /* Tech Badges */
+        .tech-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            font-family: var(--font-mono);
+        }
+
+        /* Demo Box */
+        .demo-box {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .demo-checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+
+        .demo-checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            line-height: 1.45;
+        }
+
+        .check-icon {
+            color: #10b981;
+            font-weight: 800;
+        }
+
+        /* Bottom Control Bar */
+        .bottom-bar {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            border-top: 1px solid var(--bg-card-border);
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 50;
+        }
+
+        .progress-track {
+            flex: 1;
+            max-width: 400px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #38bdf8, #f59e0b);
+            width: 9.09%;
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            min-width: 60px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--bg-card-border);
+            color: #ffffff;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: rgba(245, 158, 11, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Speaker Note Drawer */
+        .speaker-note-drawer {
+            position: fixed;
+            bottom: 64px;
+            left: 28px;
+            right: 28px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 14px 14px 0 0;
+            padding: 16px 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(120%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 60;
+        }
+
+        .speaker-note-drawer.open {
+            transform: translateY(0);
+        }
+
+        .note-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .note-body {
+            font-size: 0.92rem;
+            color: #f1f5f9;
+            line-height: 1.6;
+        }
+
+        /* Overview Grid Overlay */
+        .overview-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(9, 13, 22, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 100;
+            padding: 40px;
+            overflow-y: auto;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .overview-overlay.open {
+            display: block;
+            opacity: 1;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .overview-thumb {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .overview-thumb:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .overview-thumb.current {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .kbd {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: #cbd5e1;
+        }
+
+        .card0 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+        <div class="brand-logo">
+            <div class="logo-icon">⚡</div>
+            <span>Fixsmith Studio</span>
+            <span class="brand-tag">Frontend & Backend Architecture</span>
+        </div>
+
+        <div class="section-indicator" id="sectionIndicator">
+            PART: OVERVIEW
+        </div>
+
+        <div class="top-controls">
+            <button class="btn-control" id="btnNotesToggle" title="Toggle Speaker Notes [N]">
+                🎙️ Notes <span class="kbd">N</span>
+            </button>
+            <button class="btn-control" id="btnOverviewToggle" title="Show All Slides [O]">
+                📑 Overview <span class="kbd">O</span>
+            </button>
+            <button class="btn-control" id="btnFullscreen" title="Full Screen [F]">
+                ⛶ Fullscreen <span class="kbd">F</span>
+            </button>
+            <a href="http://127.0.0.1:8000" target="_blank" class="btn-control btn-live-app">
+                🚀 Open Live App
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Slide Viewport -->
+    <main class="viewport">
+        <div class="slide-container">
+
+            <!-- SLIDE 1: Title Slide -->
+            <section class="slide active" data-slide="1" data-section="OVERVIEW">
+                <div style="text-align: center; max-width: 900px; margin: 0 auto;">
+                    <div class="slide-badge">⚡ Senior Project Technical Presentation</div>
+                    <h1 class="slide-title" style="font-size: 3.2rem; margin: 16px 0 12px;">
+                        Fixsmith <span class="highlight-text">PC Repair Studio</span>
+                    </h1>
+                    <p class="slide-subtitle" style="font-size: 1.25rem; max-width: 740px; margin: 0 auto 30px;">
+                        การออกแบบและพัฒนาระบบบริหารจัดการร้านซ่อมคอมพิวเตอร์และลูกค้าแบบครบวงจร แยกโครงสร้างเชิงลึก 2
+                        ฝั่ง: <strong style="color: #38bdf8;">Frontend UI/UX</strong> และ <strong
+                            style="color: #fbbf24;">Backend Engineering</strong>
+                    </p>
+
+                    <div style="display: flex; justify-content: center; gap: 14px; margin-bottom: 34px;">
+                        <span class="tech-pill" style="border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">⚛️ React
+                            19 SPA</span>
+                        <span class="tech-pill" style="border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">🎨
+                            Tailwind CSS v4</span>
+                        <span class="tech-pill" style="border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">⚡ Laravel
+                            13 Framework</span>
+                        <span class="tech-pill" style="border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">🗄️
+                            SQLite & Eloquent</span>
+                        <span class="tech-pill" style="border-color: rgba(16, 185, 129, 0.3); color: #34d399;">📧
+                            Automated SMTP</span>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--bg-card-border); padding: 14px 28px; border-radius: 12px; display: inline-flex; gap: 32px; font-size: 0.9rem; color: var(--text-muted);"
+                        class="card0">
+                        <div><strong>หัวข้อการนำเสนอ:</strong> แบ่งโครงสร้าง 2 ฝั่ง (Frontend & Backend)</div>
+                        <div><strong>ผู้พัฒนา:</strong> นาย วีรวัฒน์ กรวิเชียร || นาย ธีรพัฒน์ คงกสุลถาวร </div>
+                    </div>
+                    <div
+                        style="background: rgba(255,255,255,0.03); border: 1px solid var(--bg-card-border); padding: 14px 28px; border-radius: 12px; display: inline-flex; gap: 32px; font-size: 0.9rem; color: var(--text-muted);">
+                        <div><strong>ID:</strong> 674230026 || 674230028 </div>
+                        <div><strong>Class:</strong> 67/44 </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- PART 1: FRONTEND SECTION                   -->
+            <!-- ========================================== -->
+
+            <!-- SLIDE 2: Frontend Architecture & Tech Stack -->
+            <section class="slide" data-slide="2" data-section="FRONTEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-frontend">💻 Part 1 · Frontend Architecture</div>
+                    <h2 class="slide-title">สถาปัตยกรรมส่วนหน้าบ้าน (Frontend Tech Stack)</h2>
+                    <p class="slide-subtitle">การออกแบบ User Interface ระดับพรีเมียม ตอบสนองรวดเร็วแบบ Single Page
+                        Application (SPA)</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-icon icon-cyan">⚛️</div>
+                        <h3 class="card-title">React 19 Component Architecture</h3>
+                        <p class="card-desc">
+                            พัฒนาด้วย React 19 แบ่ง UI ออกเป็นโมดูลย่อยที่นำกลับมาใช้ซ้ำได้ (Modular Components) จัดการ
+                            Client State ด้วย React Hooks ให้การสลับ Role และการเปิด Accordion
+                            ตอบสนองทันทีโดยไม่ต้องโหลดหน้าใหม่
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-purple">🎨</div>
+                        <h3 class="card-title">Tailwind CSS v4 & Glassmorphism</h3>
+                        <p class="card-desc">
+                            ใช้ประโยชน์จาก Tailwind CSS v4 Engine ทำงานร่วมกับ CSS Variables สร้างธีมสตูดิโอดาร์กโมด
+                            (Dark Slate / Amber Accent) พร้อมเอฟเฟกต์ Glassmorphism แบบโปร่งแสงและ Micro-animations
+                            เมื่อ Hover
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-emerald">⚡</div>
+                        <h3 class="card-title">Vite 8 Build Tooling</h3>
+                        <p class="card-desc">
+                            คอมไพล์โค้ดด้วย Vite 8 รองรับ Hot Module Replacement (HMR) แบบเร็วพิเศษ
+                            เพิ่มความเร็วในการประมวลผล Assets และมี Bundle Size ขนาดเล็ก
+                            ทำให้ผู้ใช้โหลดหน้าเว็บได้อย่างรวดเร็วในทุกอุปกรณ์
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: Frontend Feature 1 (Customer Portal) -->
+            <section class="slide" data-slide="3" data-section="FRONTEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-frontend">👤 Frontend Experience · Customer</div>
+                    <h2 class="slide-title">หน้าบ้านฝั่งลูกค้า (Customer Portal UI)</h2>
+                    <p class="slide-subtitle">ประสบการณ์การแจ้งซ่อมที่ง่ายดาย และการติดตามสถานะงาน 6
+                        ลำดับขั้นแบบเรียลไทม์</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 class="card-title" style="color: #38bdf8; margin-bottom: 12px;">🌟 องค์ประกอบ UI ฝั่งลูกค้า
+                        </h3>
+                        <ul class="demo-checklist">
+                            <li><span class="check-icon">✓</span> <strong>Hero Carousel:</strong>
+                                แสดงสไลด์ภาพและบริการรับซ่อม PC พร้อมระบบ Auto-play</li>
+                            <li><span class="check-icon">✓</span> <strong>New Repair Modal:</strong> ฟอร์มกรอก Serial
+                                Number, อาการเสีย, อัปโหลดรูปสภาพเครื่อง</li>
+                            <li><span class="check-icon">✓</span> <strong>Delivery Selector:</strong> สลับเลือกระหว่าง
+                                นำเครื่องมาส่งเอง (Drop-off) หรือส่งพัสดุ (Mail-in)</li>
+                            <li><span class="check-icon">✓</span> <strong>6-Stage Timeline Accordion:</strong>
+                                แผงไทม์ไลน์สถานะ 6 ขั้นที่กางดูรายละเอียดและโน้ตจากช่างได้</li>
+                            <li><span class="check-icon">✓</span> <strong>Rating & Complaint UI:</strong> ฟอร์มให้ดาว
+                                1-5 ดาว และช่องยื่นเรื่องร้องเรียนพร้อมแนบหลักฐาน</li>
+                        </ul>
+                    </div>
+
+                    <div class="card"
+                        style="justify-content: center; background: rgba(56, 189, 248, 0.03); border-color: rgba(56, 189, 248, 0.2);">
+                        <div
+                            style="font-size: 0.82rem; color: #38bdf8; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                            ✨ UI Design Highlight</div>
+                        <h4 style="font-size: 1.15rem; color: #fff; margin-bottom: 10px;">Visual Timeline Indicator</h4>
+                        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;">
+                            ไทม์ไลน์ 6 ขั้นตอนถูกออกแบบด้วยสีและไอคอนที่แสดงความคืบหน้าอย่างชัดเจน:
+                            <br><code
+                                style="color: #fbbf24;">Submitted ➔ Received ➔ Diagnosing ➔ Fixing ➔ Waiting Part ➔ Finished</code>
+                            <br><br>
+                            ลูกค้าไม่ต้องเดาว่าเครื่องอยู่ขั้นตอนไหน UI
+                            จะไฮไลต์สถานะปัจจุบันและแสดงเวลาที่ช่างอัปเดตล่าสุดโดยอัตโนมัติ
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: Frontend Feature 2 (Technician & Admin UI) -->
+            <section class="slide" data-slide="4" data-section="FRONTEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-frontend">🔧 Frontend Experience · Staff & Admin</div>
+                    <h2 class="slide-title">หน้าบ้านฝั่งช่างและผู้ดูแลระบบ (Staff & Operations UI)</h2>
+                    <p class="slide-subtitle">Workspace สำหรับช่างซ่อม และแดชบอร์ดกระจายงานแบบ Kanban สำหรับผู้จัดการ
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-icon icon-amber">🛠️</div>
+                        <h3 class="card-title">Technician Workspace UI</h3>
+                        <p class="card-desc">
+                            • <strong>Stat Counters:</strong> การ์ดสรุปตัวเลขงานรอซ่อม, รออะไหล่, และงานเสร็จสิ้น<br>
+                            • <strong>Interactive 6-Status Selector:</strong> ปุ่มกดเลือกเปลี่ยนสถานะงานในคลิกเดียว<br>
+                            • <strong>Diagnostic Note Box:</strong>
+                            ช่องพิมพ์บันทึกเชิงเทคนิคเพื่อส่งต่อเป็นอีเมลอัปเดตถึงลูกค้า<br>
+                            • <strong>Assigned Filter:</strong> ฟิลเตอร์แสดงเฉพาะงานที่ช่างคนนั้นได้รับมอบหมาย
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-emerald">📊</div>
+                        <h3 class="card-title">Admin Operations & Workload Board</h3>
+                        <p class="card-desc">
+                            • <strong>Weekly Repair Volume Chart:</strong> กราฟแท่งแสดงปริมาณงานซ่อม 7 วันย้อนหลัง<br>
+                            • <strong>Team Workload Kanban:</strong> เลนกระจายงานแบบ Dispatch แสดง Workload Capacity
+                            ของช่างแต่ละคน (เช่น 2/3)<br>
+                            • <strong>Account Directory:</strong> ตารางจัดการบัญชี เพิ่ม/ปิดการใช้งานผู้ใช้
+                            และรีเซ็ตรหัสผ่าน<br>
+                            • <strong>Feedback Inbox:</strong> แผงรับข้อร้องเรียนพร้อมฟอร์มพิมพ์ตอบกลับส่งตรงถึงลูกค้า
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: Frontend Live Demo -->
+            <section class="slide" data-slide="5" data-section="FRONTEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-frontend">🎬 Live Demonstration · Frontend</div>
+                    <h2 class="slide-title">สาธิตการใช้งานจริง: ส่วนหน้าบ้าน (Frontend Walkthrough)</h2>
+                    <p class="slide-subtitle">เปิดหน้าเว็บจริง ทดสอบการมีปฏิสัมพันธ์ของผู้ใช้ทั้ง 3 บทบาท</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card demo-box">
+                        <div>
+                            <h3 class="card-title" style="color: #38bdf8;">📌 ขั้นตอนการสาธิตฝั่ง Frontend</h3>
+                            <ul class="demo-checklist">
+                                <li><span class="check-icon">1</span> <strong>Customer (Maya Chen):</strong>
+                                    เปิดดูหน้าหลัก, กดแจ้งซ่อมเครื่องใหม่, ตรวจสอบไทม์ไลน์ใน Accordion</li>
+                                <li><span class="check-icon">2</span> <strong>Technician (Alex Kim):</strong>
+                                    สลับดูคิวงานเฉพาะช่าง, ทดลองเปลี่ยนสถานะเป็น Diagnosing, พิมพ์ Workshop Note</li>
+                                <li><span class="check-icon">3</span> <strong>Admin (Emma Walsh):</strong> ตรวจดูกราฟ 7
+                                    วัน, สาธิตบอร์ด Workload Capacity และการ Dispatch จ่ายงาน</li>
+                            </ul>
+                        </div>
+                        <a href="http://127.0.0.1:8000" target="_blank" class="btn-control btn-live-app"
+                            style="justify-content: center; padding: 10px;">
+                            ▶ คลิกเปิดหน้าเว็บ http://127.0.0.1:8000 เพื่อเดโม Frontend
+                        </a>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">💬 บันทึกการพูด (Speaking Cue)</h3>
+                        <p class="card-desc" style="font-size: 0.95rem; line-height: 1.6;">
+                            "ในส่วนของ Frontend เราเน้นการออกแบบที่ใช้งานง่าย ลดขั้นตอนที่ซับซ้อนของผู้ใช้
+                            โดยเชื่อมต่อกับ Backend ผ่าน RESTful API สังเกตว่าเมื่อสลับ Role ไปมาระหว่างลูกค้า ช่าง
+                            และแอดมิน หน้าจอจะปรับเปลี่ยน UI ตามสิทธิ์ของผู้ใช้ทันทีแบบไร้รอยต่อครับ..."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- PART 2: BACKEND SECTION                    -->
+            <!-- ========================================== -->
+
+            <!-- SLIDE 6: Backend Architecture & Tech Stack -->
+            <section class="slide" data-slide="6" data-section="BACKEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-backend">⚙️ Part 2 · Backend Engineering</div>
+                    <h2 class="slide-title">สถาปัตยกรรมส่วนหลังบ้าน (Backend Tech Stack)</h2>
+                    <p class="slide-subtitle">ขุมพลังการประมวลผล Business Logic, Data Persistence และ API Endpoints ด้วย
+                        Laravel 13</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-icon icon-amber">🐘</div>
+                        <h3 class="card-title">Laravel 13 & PHP 8.5</h3>
+                        <p class="card-desc">
+                            ใช้เฟรมเวิร์ก Laravel 13 โครงสร้างแบบ MVC มี Dependency Injection Container และ Routing
+                            Engine ที่มีประสิทธิภาพสูง จัดการ Business Logic ของงานซ่อมอย่างรัดกุม
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-cyan">🔌</div>
+                        <h3 class="card-title">RESTful API Design</h3>
+                        <p class="card-desc">
+                            ออกแบบ API ตามมาตรฐาน RESTful แบ่งกลุ่มชัดเจน: <code>/api/auth</code>,
+                            <code>/api/repairs</code>, <code>/api/feedback</code>, <code>/api/accounts</code> และ
+                            <code>/api/smtp</code> รองรับการส่งและรับข้อมูลแบบ JSON
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-emerald">🛡️</div>
+                        <h3 class="card-title">Role-Based Access (RBAC)</h3>
+                        <p class="card-desc">
+                            มีระบบป้องกันสิทธิ์การเข้าถึงข้อมูล ลูกค้าเข้าถึงได้เฉพาะใบแจ้งซ่อมของตนเอง
+                            ขณะที่ช่างและแอดมินมีสิทธิ์ตามระดับหน้าที่ พร้อมป้องกัน CSRF และ Data Validation ทุกขั้นตอน
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: Database Schema & Eloquent ORM -->
+            <section class="slide" data-slide="7" data-section="BACKEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-backend">🗄️ Database & Models · Backend</div>
+                    <h2 class="slide-title">โครงสร้างฐานข้อมูลและโมเดล (Database & Eloquent ORM)</h2>
+                    <p class="slide-subtitle">การออกแบบ Schema และความสัมพันธ์ของข้อมูลแบบ Relational Database ผ่าน
+                        SQLite</p>
+                </div>
+
+                <div class="grid-4">
+                    <div class="card">
+                        <div class="card-icon icon-amber" style="margin-bottom: 8px;">👤</div>
+                        <h4 class="card-title" style="font-size: 1rem;">User Model</h4>
+                        <p class="card-desc" style="font-size: 0.8rem;">
+                            เก็บข้อมูลผู้ใช้งาน, รหัสผ่าน (Bcrypt Hash), บทบาท (Customer, Technician, Admin, Manager),
+                            เบอร์โทร และสถานะบัญชี
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-cyan" style="margin-bottom: 8px;">📋</div>
+                        <h4 class="card-title" style="font-size: 1rem;">Repair Model</h4>
+                        <p class="card-desc" style="font-size: 0.8rem;">
+                            ตารางหลักเก็บเลข Serial, อาการเสีย, สถานะ 6 สเต็ป, วิธีส่งเครื่อง, รูปประกอบ,
+                            ช่างที่รับผิดชอบ (Foreign Key) และโน้ตการตรวจเช็ค
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-emerald" style="margin-bottom: 8px;">💬</div>
+                        <h4 class="card-title" style="font-size: 1rem;">Feedback Model</h4>
+                        <p class="card-desc" style="font-size: 0.8rem;">
+                            เก็บคะแนนดาวรีวิว (1-5), รายละเอียดข้อร้องเรียน, รูปหลักฐาน, และข้อความตอบกลับจากผู้บริหาร
+                            (Admin Reply)
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon icon-purple" style="margin-bottom: 8px;">⚙️</div>
+                        <h4 class="card-title" style="font-size: 1rem;">SmtpSetting Model</h4>
+                        <p class="card-desc" style="font-size: 0.8rem;">
+                            เก็บบันทึกการตั้งค่า Mail Server (Host, Port, Username, TLS/SSL, Driver)
+                            เพื่อรองรับการปรับแต่งเมลสดผ่านหน้าเว็บ
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="background: rgba(255,255,255,0.03); border: 1px solid var(--bg-card-border); border-radius: 12px; padding: 12px 20px; font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">
+                    💡 <strong>ORM Advantage:</strong> ใช้ Laravel Eloquent ORM เชื่อมโยงความสัมพันธ์
+                    <code>User hasMany Repairs</code> และ <code>Repair belongsTo Technician</code> ทำให้ Query
+                    ข้อมูลได้อย่างมีประสิทธิภาพและปลอดภัยจากการโจมตี SQL Injection
+                </div>
+            </section>
+
+            <!-- SLIDE 8: Automated SMTP Engine -->
+            <section class="slide" data-slide="8" data-section="BACKEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-backend">📧 Core Backend Engine</div>
+                    <h2 class="slide-title">ระบบแจ้งเตือนอีเมลอัตโนมัติ (Automated SMTP Engine)</h2>
+                    <p class="slide-subtitle">การส่งอีเมลแบบ Event-driven ผูกกับวงจรการซ่อม พร้อมบันทึกประวัติแบบ Audit
+                        Logs</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 class="card-title" style="color: #fbbf24;">⚡ Automated Email Triggers</h3>
+                        <div
+                            style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px; font-size: 0.85rem;">
+                            <div style="background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 8px;">
+                                <strong>1. Ticket Created:</strong> ส่งอีเมลยืนยันการรับแจ้งซ่อม
+                                พร้อมคำแนะนำการส่งเครื่องถึงลูกค้า
+                            </div>
+                            <div style="background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 8px;">
+                                <strong>2. Status Updated:</strong>
+                                ส่งอีเมลแจ้งเตือนลูกค้าทันทีเมื่อช่างเปลี่ยนสถานะหรือใส่ Workshop Note
+                            </div>
+                            <div style="background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 8px;">
+                                <strong>3. Work Assigned:</strong>
+                                ยิงอีเมลเตือนช่างเมื่อแอดมินมอบหมายงานซ่อมเครื่องใหม่ให้
+                            </div>
+                            <div style="background: rgba(255,255,255,0.04); padding: 8px 12px; border-radius: 8px;">
+                                <strong>4. Complaint Reply:</strong>
+                                ส่งคำชี้แจงจากแอดมินเข้าสู่อีเมลลูกค้าโดยตรงเมื่อมีการตอบข้อร้องเรียน
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title" style="color: #38bdf8;">🛠️ คุณสมบัติของระบบ SMTP ใน Fixsmith</h3>
+                        <ul class="demo-checklist">
+                            <li><span class="check-icon">✓</span> <strong>Dynamic Configuration:</strong> เปลี่ยน Mail
+                                Host และ Port ได้สดๆ ผ่าน UI ไม่ต้องแก้โค้ด</li>
+                            <li><span class="check-icon">✓</span> <strong>Multi-Provider:</strong> รองรับ Mailtrap
+                                (ทดสอบ), Gmail (App Password), Sendgrid, Brevo</li>
+                            <li><span class="check-icon">✓</span> <strong>Offline Log Mode:</strong>
+                                บันทึกเนื้อหาอีเมลลง <code>storage/logs/laravel.log</code> ทำให้เดโมได้แม้ออฟไลน์</li>
+                            <li><span class="check-icon">✓</span> <strong>Audit Logs:</strong>
+                                มีแท็บบันทึกประวัติการส่งอีเมลย้อนหลัง ตรวจสอบความถูกต้องได้ทุกรายการ</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 9: Testing & Quality Verification -->
+            <section class="slide" data-slide="9" data-section="BACKEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-backend">🧪 Testing & Verification · Backend</div>
+                    <h2 class="slide-title">การทดสอบระบบหลังบ้าน (Automated Testing with PHPUnit)</h2>
+                    <p class="slide-subtitle">การันตีความถูกต้องของ Business Logic และ API Endpoints
+                        ด้วยการทดสอบอัตโนมัติ</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card"
+                        style="text-align: center; justify-content: center; align-items: center; border-color: rgba(16, 185, 129, 0.4);">
+                        <div
+                            style="font-size: 3.5rem; font-weight: 800; color: #34d399; font-family: var(--font-mono);">
+                            100%</div>
+                        <div style="font-size: 1.1rem; font-weight: 700; margin-top: 8px;">Tests Passed</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">7 Test Suites · 20
+                            Assertions</p>
+                    </div>
+
+                    <div class="card" style="grid-column: span 2;">
+                        <h3 class="card-title">🛡️ ขอบเขตการทดสอบด้วย PHPUnit</h3>
+                        <div
+                            style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px; font-size: 0.85rem;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="tech-pill" style="color: #34d399;">PASS</span>
+                                <span><strong>Authentication & RBAC Test:</strong>
+                                    ตรวจสอบการปฏิเสธคำขอที่ไม่ได้รับอนุญาต</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="tech-pill" style="color: #34d399;">PASS</span>
+                                <span><strong>Repair Creation & Validation Test:</strong> ตรวจสอบความถูกต้องของ Input
+                                    และการออกรหัส Ticket</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="tech-pill" style="color: #34d399;">PASS</span>
+                                <span><strong>Technician Status Workflow Test:</strong> ทดสอบการเปลี่ยนสถานะตามลำดับ 6
+                                    ขั้นตอน</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <span class="tech-pill" style="color: #34d399;">PASS</span>
+                                <span><strong>Feedback & Notification Pipeline:</strong>
+                                    ทดสอบการสร้างการแจ้งเตือนและการบันทึกฟีดแบ็ก</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 10: Backend Live Demo -->
+            <section class="slide" data-slide="10" data-section="BACKEND">
+                <div class="slide-header">
+                    <div class="slide-badge badge-backend">🎬 Live Demonstration · Backend</div>
+                    <h2 class="slide-title">สาธิตการทำงานจริง: ส่วนหลังบ้าน (Backend Walkthrough)</h2>
+                    <p class="slide-subtitle">การตรวจสอบการตั้งค่า SMTP, การทดสอบส่งอีเมล และ Audit Logs ในระบบ</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card demo-box">
+                        <div>
+                            <h3 class="card-title" style="color: #fbbf24;">📌 ไฮไลต์การสาธิตฝั่ง Backend</h3>
+                            <ul class="demo-checklist">
+                                <li><span class="check-icon">1</span> <strong>SMTP Configuration Suite:</strong>
+                                    คลิกปุ่ม "SMTP Email" ที่แถบด้านบนเพื่อดูหน้าต่างตั้งค่า</li>
+                                <li><span class="check-icon">2</span> <strong>Live Test Email:</strong>
+                                    ทดลองส่งอีเมลทดสอบผ่านแท็บ "Send Test Email" เข้าสู่ผู้รับ</li>
+                                <li><span class="check-icon">3</span> <strong>Email Activity Logs:</strong>
+                                    ตรวจสอบบันทึก Audit Logs แสดงรายการอีเมลที่ถูกยิงออกจากระบบ</li>
+                                <li><span class="check-icon">4</span> <strong>Data Persistence:</strong>
+                                    ข้อมูลทั้งหมดถูกบันทึกจริงลงใน SQLite ผ่าน Laravel Eloquent ORM</li>
+                            </ul>
+                        </div>
+                        <a href="http://127.0.0.1:8000" target="_blank" class="btn-control btn-live-app"
+                            style="justify-content: center; padding: 10px;">
+                            ▶ คลิกเปิดระบบเพื่อสาธิต Backend & SMTP Suite
+                        </a>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">💬 บันทึกการพูด (Speaking Cue)</h3>
+                        <p class="card-desc" style="font-size: 0.95rem; line-height: 1.6;">
+                            "ในส่วนของ Backend ความพิเศษคือผู้ดูแลระบบสามารถปรับแต่ง Mail Server ได้เองแบบไดนามิก
+                            และเมื่อเปิดหน้าต่าง Email Activity Logs จะเห็นการบันทึกประวัติการส่งอีเมลทุกครั้งที่เกิด
+                            Event เช่น การสร้างตั๋วซ่อม หรือการเปลี่ยนสถานะ ทำให้มั่นใจได้ว่าระบบทำงานประสานกับ Backend
+                            อย่างสมบูรณ์..."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ========================================== -->
+            <!-- FINAL SLIDE: THANK YOU                     -->
+            <!-- ========================================== -->
+
+            <!-- SLIDE 11: Thank You Slide -->
+            <section class="slide" data-slide="11" data-section="THANK YOU">
+                <div style="text-align: center; max-width: 820px; margin: 0 auto;">
+                    <div class="slide-badge badge-final">🏁 End of Presentation</div>
+                    <h2 class="slide-title" style="font-size: 3.2rem; margin: 16px 0;">
+                        ขอขอบคุณสำหรับการรับฟัง
+                    </h2>
+                    <p class="slide-subtitle" style="font-size: 1.25rem; margin-bottom: 32px; color: #cbd5e1;">
+                        Fixsmith · PC Repair Studio
+                        ได้รับการพัฒนาขึ้นเพื่อยกระดับการให้บริการร้านซ่อมคอมพิวเตอร์อย่างสมบูรณ์แบบ
+                        ทั้งในด้านสถาปัตยกรรม <strong style="color: #38bdf8;">Frontend</strong> และ <strong
+                            style="color: #fbbf24;">Backend</strong>
+                    </p>
+
+                    <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 36px;">
+                        <a href="http://127.0.0.1:8000" target="_blank" class="btn-control btn-live-app"
+                            style="font-size: 1rem; padding: 10px 24px;">
+                            🚀 เข้าสู่หน้าเว็บไซต์ Fixsmith ระบบจริง
+                        </a>
+                    </div>
+
+                    <div
+                        style="background: rgba(255,255,255,0.03); border: 1px solid var(--bg-card-border); padding: 16px 36px; border-radius: 14px; display: inline-flex; gap: 28px; font-size: 0.95rem; color: var(--text-muted);">
+                        <div>✨ <strong>Frontend:</strong> React 19 · Tailwind v4 · Vite</div>
+                        <div>⚡ <strong>Backend:</strong> Laravel 13 · SQLite · SMTP Engine</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Bottom Navigation & Controls -->
+    <footer class="bottom-bar">
+        <div class="slide-counter">
+            <span id="currentSlideNum">1</span> / <span id="totalSlidesNum">11</span>
+        </div>
+
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="nav-group">
+            <button class="nav-btn" id="btnPrev" title="Previous Slide [Left Arrow / PageUp]">◀</button>
+            <button class="nav-btn" id="btnNext" title="Next Slide [Right Arrow / Space / PageDown]">▶</button>
+        </div>
+    </footer>
+
+    <!-- Speaker Note Drawer -->
+    <div class="speaker-note-drawer" id="speakerNotesDrawer">
+        <div class="note-header">
+            <span>🎙️ Speaker Notes (คำแนะนำสำหรับผู้พูด)</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem;">กด [N] หรือคลิกภายนอกเพื่อปิด</span>
+        </div>
+        <div class="note-body" id="noteBody">
+            กำลังโหลดบันทึก...
+        </div>
+    </div>
+
+    <!-- Overview Grid Overlay -->
+    <div class="overview-overlay" id="overviewOverlay">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto 24px;">
+            <h2 style="font-size: 1.5rem; font-weight: 700;">📑 Slide Navigation Overview</h2>
+            <button class="btn-control" id="btnCloseOverview">✕ Close [ESC]</button>
+        </div>
+        <div class="overview-grid" id="overviewGrid"></div>
+    </div>
+
+    <!-- Script for Slide Interaction -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 1;
+
+        const currentSlideNum = document.getElementById('currentSlideNum');
+        const totalSlidesNum = document.getElementById('totalSlidesNum');
+        const progressFill = document.getElementById('progressFill');
+        const sectionIndicator = document.getElementById('sectionIndicator');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnFullscreen = document.getElementById('btnFullscreen');
+        const btnNotesToggle = document.getElementById('btnNotesToggle');
+        const btnOverviewToggle = document.getElementById('btnOverviewToggle');
+        const speakerNotesDrawer = document.getElementById('speakerNotesDrawer');
+        const noteBody = document.getElementById('noteBody');
+        const overviewOverlay = document.getElementById('overviewOverlay');
+        const overviewGrid = document.getElementById('overviewGrid');
+        const btnCloseOverview = document.getElementById('btnCloseOverview');
+
+        totalSlidesNum.textContent = totalSlides;
+
+        const speakerNotes = {
+            1: "สวัสดีคณะกรรมการและอาจารย์ทุกท่าน วันนี้ผมขอเสนอโครงงาน Fixsmith PC Repair Studio ระบบบริหารจัดการร้านซ่อมคอมพิวเตอร์และลูกค้าแบบครบวงจร โดยการนำเสนอในวันนี้จะแบ่งโครงสร้างออกเป็น 2 ฝั่งหลักอย่างชัดเจน ได้แก่ ฝั่ง Frontend และฝั่ง Backend ครับ",
+            2: "เริ่มต้นที่ Part 1: ฝั่ง Frontend เราพัฒนาด้วย React 19 แบบ Single Page Application ร่วมกับ Tailwind CSS v4 และ Vite 8 เพื่อให้การแสดงผลมีความลื่นไหล มีลูกเล่นธีมสตูดิโอดาร์กโมดที่ดูพรีเมียม และมีประสิทธิภาพการโหลดที่รวดเร็วครับ",
+            3: "ในส่วนหน้าบ้านของลูกค้า (Customer Portal) มีจุดเด่นคือ Hero Carousel แสดงบริการ, ฟอร์มแจ้งซ่อมออนไลน์พร้อมอัปโหลดรูปภาพ และแผง Accordion ไทม์ไลน์สถานะ 6 ขั้นตอน ที่ช่วยให้ลูกค้าทราบความคืบหน้าของเครื่องตนเองได้ตลอดเวลา",
+            4: "สำหรับหน้าบ้านของช่างและแอดมิน มี Technician Workspace สำหรับนับจำนวนเครื่องและเปลี่ยนสถานะงานได้ในคลิกเดียว ส่วนแอดมินจะมีกราฟสถิติ 7 วัน และบอร์ดกระจายงาน Team Workload Kanban สำหรับจัดสรรงานให้ช่างอย่างสมดุล",
+            5: "[จังหวะสลับไปเดโม Frontend]: ตอนนี้ผมขอเปิดหน้าเว็บจริงเพื่อสาธิตการทำงานของฝั่ง Frontend ให้เห็นการตอบสนองของ UI ทั้งในบทบาทลูกค้า ช่างซ่อม และผู้ดูแลระบบครับ",
+            6: "เข้าสู่ Part 2: ฝั่ง Backend เราพัฒนาด้วย Laravel 13 บน PHP 8.5 ใช้โครงสร้างแบบ MVC และออกแบบ RESTful APIs สำหรับรับส่งข้อมูลเป็น JSON มีระบบรักษาความปลอดภัยและการแบ่งสิทธิ์ (RBAC) อย่างเข้มงวดครับ",
+            7: "ในด้านโครงสร้างฐานข้อมูล เราออกแบบ Schema บน SQLite เชื่อมต่อผ่าน Eloquent ORM มี 4 โมเดลหลักคือ User, Repair, Feedback และ SmtpSetting ซึ่งมีการผูกความสัมพันธ์แบบ Relational ป้องกัน SQL Injection อย่างสมบูรณ์",
+            8: "ไฮไลต์สำคัญของ Backend คือ Automated SMTP Engine ที่ส่งอีเมลอัตโนมัติตามเหตุการณ์ เช่น การสร้างตั๋วซ่อม, การเปลี่ยนสถานะงานซ่อม หรือการตอบข้อร้องเรียน โดยมีระบบ Audit Logs คอยบันทึกประวัติการส่งเมลทุกฉบับ",
+            9: "เพื่อรับประกันเสถียรภาพของระบบหลังบ้าน เราได้เขียน Automated Testing ด้วย PHPUnit ครอบคลุมทั้งระบบสิทธิ์ API, การสร้างใบซ่อม, และวงจรการเปลี่ยนสถานะ โดยผ่านการทดสอบ 100% ทั้ง 7 test suites รวม 20 assertions ครับ",
+            10: "[จังหวะสลับไปเดโม Backend]: ตอนนี้ผมขอสาธิตหน้าจอตั้งค่า SMTP Email และ Activity Logs บนระบบจริง เพื่อให้เห็นว่า Backend บันทึกข้อมูลและส่งอีเมลแจ้งเตือนได้อย่างถูกต้องตาม Event",
+            11: "ขอขอบคุณคณะกรรมการและอาจารย์ทุกท่านเป็นอย่างสูงสำหรับการรับฟังการนำเสนอโครงงาน Fixsmith PC Repair Studio ครับ"
+        };
+
+        function updateSlide(index) {
+            if (index < 1) index = 1;
+            if (index > totalSlides) index = totalSlides;
+            currentSlide = index;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide - 1);
+            });
+
+            currentSlideNum.textContent = currentSlide;
+            progressFill.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+            // Update Section Indicator
+            const currentSection = slides[currentSlide - 1].getAttribute('data-section') || 'OVERVIEW';
+            sectionIndicator.textContent = `PART: ${currentSection}`;
+            if (currentSection === 'FRONTEND') {
+                sectionIndicator.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+                sectionIndicator.style.color = '#38bdf8';
+            } else if (currentSection === 'BACKEND') {
+                sectionIndicator.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                sectionIndicator.style.color = '#fbbf24';
+            } else if (currentSection === 'THANK YOU') {
+                sectionIndicator.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                sectionIndicator.style.color = '#34d399';
+            } else {
+                sectionIndicator.style.borderColor = 'rgba(255,255,255,0.1)';
+                sectionIndicator.style.color = '#e2e8f0';
+            }
+
+            btnPrev.disabled = currentSlide === 1;
+            btnNext.disabled = currentSlide === totalSlides;
+
+            // Update speaker notes
+            noteBody.textContent = speakerNotes[currentSlide] || "ไม่มีบันทึกสำหรับสไลด์นี้";
+
+            // Update overview current thumb
+            document.querySelectorAll('.overview-thumb').forEach((thumb, i) => {
+                thumb.classList.toggle('current', i === currentSlide - 1);
+            });
+        }
+
+        btnPrev.addEventListener('click', () => updateSlide(currentSlide - 1));
+        btnNext.addEventListener('click', () => updateSlide(currentSlide + 1));
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (overviewOverlay.classList.contains('open')) {
+                if (e.key === 'Escape') closeOverview();
+                return;
+            }
+
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                e.preventDefault();
+                updateSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                updateSlide(currentSlide - 1);
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                updateSlide(1);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                updateSlide(totalSlides);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            } else if (e.key === 'n' || e.key === 'N') {
+                toggleNotes();
+            } else if (e.key === 'o' || e.key === 'O') {
+                toggleOverview();
+            }
+        });
+
+        // Fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => { });
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+        btnFullscreen.addEventListener('click', toggleFullscreen);
+
+        // Notes drawer toggle
+        function toggleNotes() {
+            speakerNotesDrawer.classList.toggle('open');
+        }
+        btnNotesToggle.addEventListener('click', toggleNotes);
+
+        document.addEventListener('click', (e) => {
+            if (speakerNotesDrawer.classList.contains('open') &&
+                !speakerNotesDrawer.contains(e.target) &&
+                e.target !== btnNotesToggle &&
+                !btnNotesToggle.contains(e.target)) {
+                speakerNotesDrawer.classList.remove('open');
+            }
+        });
+
+        // Overview Grid
+        function populateOverview() {
+            overviewGrid.innerHTML = '';
+            slides.forEach((slide, i) => {
+                const title = slide.querySelector('.slide-title')?.textContent.trim() || `Slide ${i + 1}`;
+                const badge = slide.querySelector('.slide-badge')?.textContent.trim() || '';
+
+                const thumb = document.createElement('div');
+                thumb.className = `overview-thumb ${i === currentSlide - 1 ? 'current' : ''}`;
+                thumb.innerHTML = `
+                    <div style="font-size: 0.72rem; color: var(--primary); font-weight: 700; margin-bottom: 6px;">
+                        #${i + 1} ${badge}
+                    </div>
+                    <div style="font-size: 0.88rem; font-weight: 600; color: #fff; line-height: 1.3;">
+                        ${title.length > 42 ? title.substring(0, 42) + '...' : title}
+                    </div>
+                `;
+                thumb.addEventListener('click', () => {
+                    updateSlide(i + 1);
+                    closeOverview();
+                });
+                overviewGrid.appendChild(thumb);
+            });
+        }
+
+        function toggleOverview() {
+            if (overviewOverlay.classList.contains('open')) {
+                closeOverview();
+            } else {
+                populateOverview();
+                overviewOverlay.classList.add('open');
+            }
+        }
+
+        function closeOverview() {
+            overviewOverlay.classList.remove('open');
+        }
+
+        btnOverviewToggle.addEventListener('click', toggleOverview);
+        btnCloseOverview.addEventListener('click', closeOverview);
+
+        // Init
+        updateSlide(1);
+    </script>
+</body>
+
+</html>
