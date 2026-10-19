@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.4-cli
 
 # Install system dependencies & SQLite
 RUN apt-get update && apt-get install -y \
@@ -25,4 +25,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan config:clear && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["sh", "-c", "touch database/database.sqlite && php artisan migrate --force && php artisan config:clear && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
