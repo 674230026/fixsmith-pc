@@ -1,0 +1,26 @@
+[package]
+name = "fixsmith-pc"
+version = "0.1.0"
+description = "Fixsmith PC Repair Studio"
+
+[dependencies]
+"php/php" = "=8.3.4"
+
+[fs]
+"/app/" = "."
+
+[[command]]
+name = "run"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["-t", "/app/laravel-app/public", "-S", "localhost:8080"]
+env = [
+    "APP_NAME=Fixsmith PC Repair Studio",
+    "APP_KEY=base64:Wu9mvtRrD7ilmEA3RgP/qKRiV2m8ITE1aqiqubEjVH4=",
+    "APP_ENV=production",
+    "APP_DEBUG=true",
+    "DB_CONNECTION=sqlite",
+    "SESSION_DRIVER=file"
+]
