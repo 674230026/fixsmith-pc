@@ -1,7 +1,13 @@
-FROM php:8.3-cli-alpine
+FROM php:8.3-cli
 
-RUN apk add --no-cache sqlite-dev git unzip curl libzip-dev \
-    && docker-php-ext-install pdo_sqlite pcntl bcmath
+# Install system dependencies & SQLite
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libsqlite3-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo_sqlite zip \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -13,11 +19,8 @@ COPY laravel-app/ .
 # Ensure .env exists
 RUN cp .env.example .env
 
-# Install Composer dependencies with no-scripts to prevent early artisan errors
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-
-# Dump optimized autoload
-RUN composer dump-autoload --optimize
+# Install Composer dependencies with ignore-platform-reqs
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts --ignore-platform-reqs
 
 ENV PORT=10000
 EXPOSE 10000
