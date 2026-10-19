@@ -1,7 +1,7 @@
 FROM php:8.3-cli-alpine
 
-RUN apk add --no-cache sqlite-dev git unzip
-RUN docker-php-ext-install pdo_sqlite
+RUN apk add --no-cache sqlite-dev git unzip curl libzip-dev \
+    && docker-php-ext-install pdo_sqlite pcntl bcmath
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -10,10 +10,15 @@ WORKDIR /app
 # Copy the Laravel application
 COPY laravel-app/ .
 
-# Install Composer dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Ensure .env exists
+RUN cp .env.example .env
 
-# Set environment
+# Install Composer dependencies with no-scripts to prevent early artisan errors
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Dump optimized autoload
+RUN composer dump-autoload --optimize
+
 ENV PORT=10000
 EXPOSE 10000
 
